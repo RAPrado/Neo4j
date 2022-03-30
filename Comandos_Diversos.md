@@ -6,4 +6,7 @@ Lista o histórico de comandos executados.
 
 # Cypher commands
 * CALL db.schema.visualization()<p>
+  Exibe o esquema do banco de dados.<p>
+  
 * :sysinfo<p>
+  Exibe os bancos de dados existentes. <p>
