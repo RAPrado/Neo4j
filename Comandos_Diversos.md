@@ -5,4 +5,5 @@ Limpa os quadros de resultados. The maximum number of result frames displayed in
 Lista o histórico de comandos executados.
 
 # Cypher commands
-CALL db.schema.visualization()
+* CALL db.schema.visualization()<p>
+* :sysinfo<p>
