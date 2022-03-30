@@ -4,9 +4,11 @@ Limpa os quadros de resultados. The maximum number of result frames displayed in
 # :history
 Lista o histórico de comandos executados.
 
-# Cypher commands
-* CALL db.schema.visualization()<p>
-  Exibe o esquema do banco de dados.<p>
+# CALL db.schema.visualization()
+Exibe o esquema do banco de dados.
   
-* :sysinfo<p>
-  Exibe os bancos de dados existentes. <p>
+# :sysinfo
+Exibe os bancos de dados existentes.
+
+# :help cypher
+Exibe dicas de comandos Cypher.
