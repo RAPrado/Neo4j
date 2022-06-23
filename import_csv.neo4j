@@ -1,0 +1,2 @@
+LOAD CSV WITH HEADERS
+FROM 'file:///caminho/nomeArquivo.csv' AS row RETURN (row)
