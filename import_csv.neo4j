@@ -1,6 +1,5 @@
 //Referência : https://neo4j.com/developer/guide-import-csv/
 
-
 //Importando localmente
 LOAD CSV WITH HEADERS
 FROM 'file:///subPasta/nomeArquivo.csv' AS row RETURN (row)
