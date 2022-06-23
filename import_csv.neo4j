@@ -1,2 +1,9 @@
+//Referência : https://neo4j.com/developer/guide-import-csv/
+
+
+//Importando localmente
 LOAD CSV WITH HEADERS
-FROM 'file:///caminho/nomeArquivo.csv' AS row RETURN (row)
+FROM 'file:///subPasta/nomeArquivo.csv' AS row RETURN (row)
+
+//Importando da internet
+LOAD CSV FROM 'https://data.neo4j.com/northwind/customers.csv'
