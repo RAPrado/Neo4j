@@ -1,8 +1,58 @@
 //Referência : https://neo4j.com/developer/guide-import-csv/
 
-//Importando localmente
+//Apenas lendo um arquivo
 LOAD CSV WITH HEADERS
-FROM 'file:///subPasta/nomeArquivo.csv' AS row RETURN (row)
+FROM 'file:///subPasta/nomeArquivo.csv' AS row RETURN (row)  //localmente
+//FROM 'https://data.neo4j.com/northwind/customers.csv' AS row RETURN (row)   /Internet
 
-//Importando da internet
-LOAD CSV FROM 'https://data.neo4j.com/northwind/customers.csv'
+//Apenas lendo um arquivo localmente
+LOAD CSV WITH HEADERS
+FROM 'file:///subPasta//2-movieData.csv' AS row
+//Filtra linhas a importar
+WITH row WHERE row.Entity = "Movie"
+RETURN
+row.tmdbId,
+row.imdbId,
+toFloat(row.imdbRating), //Converte para float
+row.released,
+row.title,
+toInteger(row.year), //Converte para inteiro
+row.poster,
+toInteger(row.runtime), //Converte para inteiro
+split(coalesce(row.countries,""), "|"), //Converte para lista
+toInteger(row.imdbVotes), //Converte para inteiro
+toInteger(row.revenue), //Converte para inteiro
+row.plot,
+row.url,
+toInteger(row.budget), //Converte para inteiro
+split(coalesce(row.languages,""), "|"), //Converte para lista
+split(coalesce(row.genres,""), "|") //Converte para lista
+LIMIT 10  //Apenas 10 primeiros registros
+
+
+//Importa os dados e cria as duas tabelas Movie and Genre
+:auto USING PERIODIC COMMIT  //:auto usado para otimizar memória. Periodic commit, vai gravando os registros na tabela periodicamente
+LOAD CSV WITH HEADERS FROM 'file:///Movies//2-movieData.csv' AS row
+WITH row WHERE row.Entity = "Movie"
+MERGE (m:Movie {movieId: row.movieId})
+ON CREATE SET
+m.tmdbId = row.tmdbId,
+m.imdbId = row.imdbId,
+m.imdbRating = toFloat(row.imdbRating),
+m.released = row.released,
+m.title = row.title,
+m.year = toInteger(row.year),
+m.poster = row.poster,
+m.runtime = toInteger(row.runtime),
+m.countries = split(coalesce(row.countries,""), "|"),
+m.imdbVotes = toInteger(row.imdbVotes),
+m.revenue = toInteger(row.revenue),
+m.plot = row.plot,
+m.url = row.url,
+m.budget = toInteger(row.budget),
+m.languages = split(coalesce(row.languages,""), "|")
+WITH m,split(coalesce(row.genres,""), "|") AS genres
+UNWIND genres AS genre  //UNWIND, you can transform any list back into individual rows
+WITH m, genre
+MERGE (g:Genre {name:genre})
+MERGE (m)-[:IN_GENRE]->(g)
