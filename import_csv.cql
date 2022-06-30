@@ -3,7 +3,9 @@
 //Apenas lendo um arquivo
 LOAD CSV WITH HEADERS
 FROM 'file:///subPasta/nomeArquivo.csv' AS row RETURN (row)  //localmente
-//FROM 'https://data.neo4j.com/northwind/customers.csv' AS row RETURN (row)   /Internet
+//FROM 'https://data.neo4j.com/northwind/customers.csv' AS row RETURN (row)   //Internet
+//FROM 'https://data.neo4j.com/northwind/customers.csv' AS row RETURN (row) FIELDTERMINATOR ';'  //Definindo o tipo de separador de colunas
+
 
 //Apenas lendo um arquivo localmente
 LOAD CSV WITH HEADERS
