@@ -31,6 +31,42 @@ split(coalesce(row.languages,""), "|"), //Converte para lista
 split(coalesce(row.genres,""), "|") //Converte para lista
 LIMIT 10  //Apenas 10 primeiros registros
 
+//Importa os dados se não exisitir pois está usando o MERGE
+:auto USING PERIODIC COMMIT  //:auto usado para otimizar memória. Periodic commit, vai gravando os registros na tabela periodicamente
+LOAD CSV WITH HEADERS FROM 'file:///Movies//2-movieData.csv' AS row
+WITH row WHERE row.Entity = "Movie"
+MERGE (c:Movie {Codigo: row.Codigo,Hora:row.Hora,Valor:row.Valor}) 
+
+//Exemplo importanto tudo
+//Codigo | Hora     |	Valor
+//------ | -------- | ------
+//1111   | 15:07:00 | 5.00
+//2222   | 15:07:00 | 6.00
+//3333   | 14:48:00 | 2.00
+//3333   | 14:49:00 | 130.00
+//4444   | 14:55:00 | 10.00
+//4444   | 14:58:00 | 100.00
+//4444   | 15:00:00 | 200.00
+
+
+//Importa os dados se não exisitir pois está usando o MERGE, e atualiza os demais campos, no comando SET, quando exisitir
+:auto USING PERIODIC COMMIT  //:auto usado para otimizar memória. Periodic commit, vai gravando os registros na tabela periodicamente
+LOAD CSV WITH HEADERS FROM 'file:///Movies//2-movieData.csv' AS row
+WITH row WHERE row.Entity = "Movie"
+MERGE (c:Movie {Codigo: row.Codigo}) 
+ON CREATE SET
+c.Hora=row.Hora,
+c.Valor=row.Valor
+
+//Exemplo importanto e atualizando
+//Codigo | Hora     |	Valor
+//------ | -------- | ------
+//1111   | 15:07:00 | 5.00
+//2222   | 15:07:00 | 6.00
+//3333   | 14:48:00 | 2.00
+//4444   | 14:55:00 | 10.00
+
+
 
 //Importa os dados e cria as duas tabelas Movie and Genre
 :auto USING PERIODIC COMMIT  //:auto usado para otimizar memória. Periodic commit, vai gravando os registros na tabela periodicamente
