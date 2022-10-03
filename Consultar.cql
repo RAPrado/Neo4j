@@ -1,3 +1,12 @@
+/*Lista Nós dentro do banco*/
+MATCH (n) RETURN n
+
+/*Consultar*/
+MATCH (n:Movie ) RETURN n
+MATCH (n:Movie ) RETURN n limit 25;
+MATCH (n:Person {name: "Keanu Reeves"}) RETURN n
+
+
 //Consulta todos relacionamentos entre nós
 match(c:Tabela_A)<-[]->(t)<-[]->(o)
 return *
