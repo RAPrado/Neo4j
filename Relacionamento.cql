@@ -30,3 +30,8 @@ MERGE (sandy)-[:RATED {rating:4}]->(sleep)
 MERGE (clinton)-[:RATED {rating:3}]->(apollo)
 MERGE (clinton)-[:RATED {rating:3}]->(sleep)
 MERGE (clinton)-[:RATED {rating:3}]->(hoffa)
+
+
+//Deletar um relacionamenteo
+MATCH ()-[r:NOME RELACIONAMENTO]->()
+DELETE r
