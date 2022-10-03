@@ -6,7 +6,10 @@ Lista o histórico de comandos executados.
 
 # CALL db.schema.visualization()
 Exibe o esquema do banco de dados.
-  
+
+# :dbs
+Lista databases
+
 # :sysinfo
 Exibe os bancos de dados existentes.
 
